@@ -20,6 +20,6 @@ void insertionSort(std::vector<T>& input)
 }
 
 int main(int argn, char* argv[]) {
-  runMethod(argn, argv, insertionSort<int>);
+  runMethod(insertionSort<int>);
   return 0;
 }

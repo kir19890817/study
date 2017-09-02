@@ -20,6 +20,6 @@ void bubbleSort(std::vector<T>& input)
 
 int main(int argn, char* argv[])
 {
-  runMethod(argn, argv, bubbleSort<int>);
+  runMethod(bubbleSort<int>);
   return 0;
 }

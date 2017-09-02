@@ -1,22 +1,27 @@
 #include "Driver.h"
 
+#include <algorithm>
 #include <iostream>
 #include <iterator>
 
-void runMethod(int argn, char* argv[], 
-               std::function<void(std::vector<int>&)> processor)
+#include <assert.h>
+
+void runMethod(std::function<void(std::vector<int>&)> processor)
 {
-  if (argn <= 1) {
-    return;
-  }
-
   std::vector<int> input;
-  input.reserve(argn);
-  for (int i = 1; i < argn; ++i) {
-    input.push_back(atoi(argv[i]));
+  input.reserve(100);
+  for (int i = 100; i > 0; --i) {
+    input.push_back(i);
   }
+  std::vector<int> idealOutput = input;
+  std::sort(idealOutput.begin(), idealOutput.end());
   processor(input);
-
-  std::cout << "Sorted: ";
-  std::copy(input.begin(), input.end(), std::ostream_iterator<int>(std::cout, ";"));
+  assert(input.size() == idealOutput.size());
+  for (int i = 0; i < input.size(); ++i) {
+    if (input[i] != idealOutput[i]) {
+      std::cout << "Incorrect element " << input[i] << " instead of " << idealOutput[i] << std::endl;
+      return;
+    }
+  }
+  std::cout << "Test finished successful" << std::endl;
 }

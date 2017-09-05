@@ -1,5 +1,9 @@
 #include "Driver.h"
 
+// Worst-case performance	О(n2)
+// Best-case performance	О(n2)
+// Average performance	О(n2)
+
 void selectionSort(std::vector<int>& input)
 {
   for (int i = 0; i < input.size() - 1; ++i) {

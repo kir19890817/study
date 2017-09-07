@@ -10,16 +10,18 @@ endif
 CXXFLAGS = -std=c++11
 
 .PHONY: all 
-all: BubbleSort InsertionSort SelectionSort MergeSort
+Targets = BubbleSort InsertionSort SelectionSort MergeSort QuickSort
+all: $(Targets)
 
 BubbleSort: BubbleSort.cpp Driver.o
 InsertionSort: InsertionSort.cpp Driver.o
 SelectionSort: SelectionSort.cpp Driver.o
 MergeSort: MergeSort.cpp Driver.o
+QuickSort: QuickSort.cpp Driver.o
 
 Driver.o: Driver.cpp
 
 .PHONY: clean
 clean: 
 	rm *.o
-	rm BubbleSort InsertionSort SelectionSort MergeSort
+	rm $(Targets)

@@ -8,7 +8,7 @@ int findPivot(std::vector<T>& input, int begin, int end)
   int j = end + 1;
   while(true) {
     do ++i; while (input[i] < pivot);
-    do --j; while(input[j] > pivot);
+    do --j; while (input[j] > pivot);
     if (i >= j) {
       return j;
     }

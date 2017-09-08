@@ -4,7 +4,8 @@
 // Best-case performance	О(n2)
 // Average performance	О(n2)
 
-void selectionSort(std::vector<int>& input)
+template <typename T>
+void selectionSort(std::vector<T>& input)
 {
   for (int i = 0; i < input.size() - 1; ++i) {
     int minIndex = i;
@@ -19,6 +20,6 @@ void selectionSort(std::vector<int>& input)
 
 int main(int argn, char* argv[])
 {
-  runMethod(selectionSort);
+  runMethod(selectionSort<int>);
   return 0;
 }

@@ -1,6 +1,7 @@
 #include "Driver.h"
 
-int findPivot(std::vector<int>& input, int begin, int end)
+template <typename T>
+int findPivot(std::vector<T>& input, int begin, int end)
 {
   int pivot = input[begin];
   int i = begin - 1;
@@ -15,16 +16,18 @@ int findPivot(std::vector<int>& input, int begin, int end)
   }
 }
 
-void doSort(std::vector<int>& input, int begin, int end)
+template <typename T>
+void doSort(std::vector<T>& input, int begin, int end)
 {
   if (begin < end) {
-    int pivot = findPivot(input, begin, end);
+    T pivot = findPivot(input, begin, end);
     doSort(input, begin, pivot);
     doSort(input, pivot + 1, end);
   }
 };
 
-void quickSort(std::vector<int>& input)
+template <typename T>
+void quickSort(std::vector<T>& input)
 {
   doSort(input, 0, input.size() - 1);
 }
@@ -32,5 +35,5 @@ void quickSort(std::vector<int>& input)
 
 int main(int argn, char* argv[]) 
 {
-  runMethod(quickSort);
+  runMethod(quickSort<int>);
 }

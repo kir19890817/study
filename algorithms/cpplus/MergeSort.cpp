@@ -1,9 +1,9 @@
 #include "Driver.h"
 
-std::vector<int> merge(const std::vector<int>& left, 
-                       const std::vector<int>& right)
+template<typename T>
+std::vector<T> merge(const std::vector<T>& left, const std::vector<T>& right)
 {
-  std::vector<int> result;
+  std::vector<T> result;
   result.reserve(left.size() + right.size());
   int leftHead = 0;
   int rightHead = 0;
@@ -18,15 +18,16 @@ std::vector<int> merge(const std::vector<int>& left,
 }
 
 
-void mergeSort(std::vector<int>& input)
+template<typename T>
+void mergeSort(std::vector<T>& input)
 {
   if (input.size() <= 1) {
     return;
   }
 
   int middle = input.size() / 2;
-  std::vector<int> left(input.begin(), input.begin() + middle);
-  std::vector<int> right(input.begin() + middle, input.end());
+  std::vector<T> left(input.begin(), input.begin() + middle);
+  std::vector<T> right(input.begin() + middle, input.end());
 
   mergeSort(left);
   mergeSort(right);
@@ -35,6 +36,6 @@ void mergeSort(std::vector<int>& input)
 
 int main()
 {
-  runMethod(mergeSort);
+  runMethod(mergeSort<int>);
   return 0;
 }

@@ -9,8 +9,7 @@ class Driver
     method.sort(input);
     for (int i = 0; i < input.length; ++i) {
       if (input[i] != i) {
-        System.out.println("Incorrect value [" + i + "] " + input[i] + 
-                           " != " + i);
+        System.out.println("Incorrect value [" + i + "] " + input[i] + " != " + i);
         return;
       }
     }

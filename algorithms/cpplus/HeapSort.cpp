@@ -3,7 +3,7 @@
 void satisfyHeap(std::vector<int>& input, int i, int length)
 {
   int left = 2*i;
-  int right = 2*i +1;
+  int right = 2*i + 1;
   int largest = i;
   if (left <= length && input[left] > input[largest]) {
     largest = left;

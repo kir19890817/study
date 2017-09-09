@@ -13,11 +13,6 @@ class HeapSort implements SortMethod
     }
   }
 
-  static public void main(String[] argv)
-  {
-    Driver.run(new HeapSort());
-  }
-
   private void heapify(int[] input)
   {
     for (int i = input.length/2; i >= 0; --i) {
@@ -42,5 +37,10 @@ class HeapSort implements SortMethod
       input[largest] = temp;
       satisfyHeap(input, largest, length);
     }
+  }
+
+  static public void main(String[] argv)
+  {
+    Driver.run(new HeapSort());
   }
 }

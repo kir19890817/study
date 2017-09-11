@@ -18,13 +18,8 @@ void countSort(std::vector<T>& input, T minimal, T maximal)
   input = output;
 }
 
-void doCountSort(std::vector<int>& input)
-{
-  countSort(input, 0, 100);
-}
-
 int main(int argn, char* argv[]) 
 {
-  runMethod(doCountSort);
+  runMethod([](std::vector<int>& input) { countSort(input, 0, 100); });
   return 0;
 }

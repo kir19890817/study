@@ -26,13 +26,7 @@ void quickSort(std::vector<T>& input, int begin, int end)
   }
 };
 
-void doQuickSort(std::vector<int>& input)
-{
-  quickSort(input, 0, input.size() - 1);
-}
-
-
 int main(int argn, char* argv[]) 
 {
-  runMethod(doQuickSort);
+  runMethod([](std::vector<int>& input) { quickSort(input, 0, input.size() - 1); });
 }

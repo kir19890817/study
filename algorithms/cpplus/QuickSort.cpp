@@ -17,23 +17,22 @@ int findPivot(std::vector<T>& input, int begin, int end)
 }
 
 template <typename T>
-void doSort(std::vector<T>& input, int begin, int end)
+void quickSort(std::vector<T>& input, int begin, int end)
 {
   if (begin < end) {
     T pivot = findPivot(input, begin, end);
-    doSort(input, begin, pivot);
-    doSort(input, pivot + 1, end);
+    quickSort(input, begin, pivot);
+    quickSort(input, pivot + 1, end);
   }
 };
 
-template <typename T>
-void quickSort(std::vector<T>& input)
+void doQuickSort(std::vector<int>& input)
 {
-  doSort(input, 0, input.size() - 1);
+  quickSort(input, 0, input.size() - 1);
 }
 
 
 int main(int argn, char* argv[]) 
 {
-  runMethod(quickSort<int>);
+  runMethod(doQuickSort);
 }

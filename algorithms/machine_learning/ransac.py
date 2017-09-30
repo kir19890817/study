@@ -7,9 +7,13 @@ from numpy.linalg import norm
 def ransacLinear(data, minRequired, maxIter, minFitting, threshold):
   iterations = 0
   bestFit = []
+  bestError = float("inf")
   while iterations < maxIter:
     mayBeInliers = zip(*(permutation(data)[0:minRequired]))
-    [mayBeBestFit, bestError, _, _, _] = polyfit(mayBeInliers[0], mayBeInliers[1], 1, full = True)
+    [mayBeBestFit, mayBeBestError, _, _, _] = polyfit(mayBeInliers[0], mayBeInliers[1], 1, full = True)
+    if mayBeBestError < bestError:
+      bestError = mayBeBestError
+      bestFit = mayBeBestFit
     alsoInliers = []
     for candidate in set(data) - set(mayBeInliers):
       a = mayBeBestFit[0]

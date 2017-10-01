@@ -36,7 +36,7 @@ def ransacLinear(data, minRequired, maxIter, minFitting, threshold):
   return bestFit
 
 def runTest():
-  data = [(1, 1), (2, 2), (3, 3), (4, 4), (10, 100), (11, 200)]
+  data = [(0, 1000), (1, 1), (2, 2), (3, 3), (4, 4), (10, 100), (11, 200)]
   print("Data: " + str(data))
   bestFit = ransacLinear(data, len(data)/2, 100, len(data)/2, 0.1)
   if bestFit == []:

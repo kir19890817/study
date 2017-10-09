@@ -5,7 +5,7 @@
 
 using namespace std;
 
-set<int> bfs(int start, vector<vector<bool>>& adjMatrix)
+int bfs(int start, vector<vector<bool>>& adjMatrix)
 {
   set<int> checked;
   deque<int> queue;
@@ -24,16 +24,27 @@ set<int> bfs(int start, vector<vector<bool>>& adjMatrix)
       }
     }
   }
-  return checked;
+  for (int i = 0; i < adjMatrix.size(); ++i) {
+    if (checked.find(i) == checked.end()) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 int main()
 {
-  vector<vector<bool>> adjMatrix(3, vector<bool>(3));
+  vector<vector<bool>> adjMatrix(4, vector<bool>(4));
   adjMatrix[0][1] = true;
   adjMatrix[1][2] = true;
-  const auto walked = bfs(0, adjMatrix);
-  cout << "Walked through " << walked.size() << " elements\n";
+  int counter = 1;
+  auto next = bfs(0, adjMatrix);
+  while (next > 0) {
+    next = bfs(next, adjMatrix);
+    ++counter;
+  }
+  
+  cout << "Found " << counter << " clusters\n";
 
   return 0;
 }

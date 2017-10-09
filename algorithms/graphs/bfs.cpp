@@ -8,22 +8,22 @@ using namespace std;
 int bfs(long start, const map<int, set<long>>& graph, vector<bool>& checked)
 {
   deque<long> queue;
-
+  set<long> visited;
   queue.push_back(start);
-  int count = 1;
+  visited.insert(start);
 
   while (!queue.empty()) {
     const auto current = queue.front();
     queue.pop_front();
+    visited.insert(current);
     for (const auto& adj : graph.at(current)) {
       if (!checked[adj]) {
         checked[adj] = true;
-        ++count;
         queue.push_back(adj);
       }
     }
   }
-  return count;
+  return visited.size();
 }
 
 int main()

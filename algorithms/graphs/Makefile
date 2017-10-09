@@ -10,11 +10,12 @@ endif
 CXXFLAGS = -std=c++11
 
 .PHONY: all 
-Targets = bfs roads
+Targets = bfs roads dijkstra
 all: $(Targets)
 
 bfs: bfs.cpp 
 roads: roads.cpp
+dijkstra: dijkstra.cpp
 
 .PHONY: clean
 clean: 

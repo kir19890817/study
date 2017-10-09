@@ -9,7 +9,8 @@ def ransacLinear(data, minRequired, maxIter, minFitting, threshold):
   bestFit = []
   bestError = float("inf")
   while iterations < maxIter:
-    mayBeInliers = zip(*(permutation(data)[0:minRequired]))
+    samples = permutation(data)[0:minRequired]
+    mayBeInliers = zip(*samples)
     [mayBeBestFit, mayBeBestError, _, _, _] = polyfit(mayBeInliers[0], mayBeInliers[1], 1, full = True)
     if mayBeBestError < bestError:
       bestError = mayBeBestError

@@ -15,6 +15,7 @@ all: $(Targets)
 
 bfs: bfs.cpp 
 roads: roads.cpp
+mmon: moon.cpp
 dijkstra: dijkstra.cpp
 
 .PHONY: clean

@@ -10,7 +10,7 @@ endif
 CXXFLAGS = -std=c++11
 
 .PHONY: all 
-Targets = bfs roads moon dijkstra kruskal
+Targets = bfs roads moon dijkstra kruskal even
 all: $(Targets)
 
 bfs: bfs.cpp 
@@ -18,6 +18,7 @@ roads: roads.cpp
 mmon: moon.cpp
 dijkstra: dijkstra.cpp
 kruskal: kruskal.cpp
+even: even.cpp
 
 .PHONY: clean
 clean: 

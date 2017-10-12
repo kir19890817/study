@@ -8,90 +8,42 @@
 
 using namespace std;
 
-struct Graph
-{
-  set<int> vertices;
-  set<pair<int, int>> edges;
-};
+using Graph = map<int, vector<int>>;
 
-vector<pair<int, int>> getEdgesWithLeafNodes(const Graph& graph)
+int dfs(int start, Graph& graph, map<pair<int, int>, int>& weights, vector<bool>& checked)
 {
-  vector<pair<int, int>> result;
-  vector<bool> isHead(graph.vertices.size() + 1, false);
-  for (const auto& e : graph.edges) {
-    isHead[e.first] = true;
-  }
-  for (const auto& e : graph.edges) {
-    if (!isHead[e.second]) {
-      result.push_back(e);
+  checked[start] = true;
+  int counter = 0;
+  for (const auto& n : graph[start]) {
+    if (!checked[n]) {
+      int delta = 1 + dfs(n, graph, weights, checked);
+      weights[make_pair(start, n)] = delta;
+      counter += delta;
     }
   }
-  return result;
-}
-
-map<int, vector<int>> getGroups(const vector<pair<int, int>> edges)
-{
-  map<int, vector<int>> result;
-  for (const auto& e : edges) {
-    result[e.first].push_back(e.second);
-  }
-  return result;
-}
-
-void reduceGraph(Graph& graph, const map<int, vector<int>>& groups)
-{
-  for (const auto& g : groups) {
-    if (0 == g.second.size() % 2) {
-      for (const auto& n : g.second) {
-        graph.vertices.erase(n);
-        graph.edges.erase(make_pair(g.first, n));
-      }
-    } else if (g.second.size() > 2) {
-      const auto n1 = *g.second.begin();
-      for (const auto& n : g.second) {
-        if (n != n1) {
-          graph.vertices.erase(n);
-          graph.edges.erase(make_pair(g.first, n));
-        }
-      }
-    }
-  }
-}
-
-int solve(Graph graph)
-{
-  // while effects the graph
-  //   get edges with leaf nodes
-  //   from them select those with common parents and form groups
-  //   replace groups with single node if having odd number of leafs and two if having even
-  while(true) {
-    const auto edgesWithLeafs = getEdgesWithLeafNodes(graph); 
-    const auto groups = getGroups(edgesWithLeafs);
-    const auto before = graph.vertices.size();
-    reduceGraph(graph, groups);
-    if (graph.vertices.size() == before) break;
-  }
-#if 1
-  for (const auto& e : graph.edges) {
-    cout << "(" << e.first << ", " << e.second << ")" << endl;
-  }
-#endif
-  return getEdgesWithLeafNodes(graph).size() - 1;
+  return counter;
 }
 
 int main()
 {
   int n, m;
   cin >> n >> m;
-  Graph g;
-  for (int i = 1; i <= n; ++i) {
-    g.vertices.insert(i);
+  map<pair<int, int>, int> weights;
+  vector<bool> checked(n + 1, false);
+  Graph graph;
+  for (int i = 1; i < n + 1; ++i) {
+    graph[i] = {};
   }
   for (int i = 0; i < m; ++i) {
-    int x, y;
-    cin >> x >> y;
-    g.edges.insert(make_pair(y, x));
+    int child, parent;
+    cin >> child >> parent;
+    graph[parent].push_back(child);
   }
-  cout << solve(g) << endl;
+  dfs(1, graph, weights, checked);
+  int result = 0;
+  for (const auto& w : weights) {
+    result += (w.second % 2 == 0);
+  }
+  cout << result;
   return 0;
 }

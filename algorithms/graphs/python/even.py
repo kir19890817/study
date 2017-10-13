@@ -29,7 +29,7 @@ if __name__ == "__main__":
   result = 0
   for i in w:
     result += (w[i] % 2 == 0)
-  print(graph)
-  print(w)
+  #print(graph)
+  #print(w)
   print(result)
 

@@ -5,15 +5,16 @@ import sys
 def prim(start, graph):
   minTree = set([start])
   result = 0
-  while len(minTree) < len(graph):
+  while len(minTree) != len(graph):
     delta = sys.maxsize
     vertex = 0
-    for node in graph:
-      if (node['v'] not in minTree) and (node['w'] < delta):
-        delta = node['w']
-        vertex = node['v']
+    for v in graph:
+      for node in graph[v]:
+        if (node['v'] not in minTree) and (node['w'] < delta) and (v in minTree):
+          delta = node['w']
+          vertex = node['v']
     result += delta
-    minTree.append(vertex)
+    minTree.add(vertex)
   return result
 
 if __name__ == '__main__':

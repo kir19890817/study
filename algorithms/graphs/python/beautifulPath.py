@@ -5,7 +5,6 @@ from collections import deque
 
 def findCost(start, end, graph, cost):
   queue = deque([start])
-  checked = set([])
     
   while queue:
     current = queue.popleft()
@@ -13,11 +12,13 @@ def findCost(start, end, graph, cost):
     for n in graph[current]:
       v = n['v']
       w = n['w']
-      if v not in checked:
+      if v == current:
+        continue
+      newCosts = set([w | i for i in cost[current]])
+      if not newCosts.issubset(cost[v]):
+        cost[v] = cost[v].union(newCosts)
         queue.append(v)
-        for i in cost[current].copy():
-          cost[v].add(w | i)
-    checked.add(current)
+
   if not cost[end]:
     return -1
   return min(cost[end])

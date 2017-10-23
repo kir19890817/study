@@ -14,11 +14,13 @@ def findCost(start, end, graph, cost):
       w = n['w']
       if v == current:
         continue
+      needAdd = False
       for c in cost[current]:
         if c | w not in cost[v]:
           cost[v].add(c | w)
-          if v not in queue:
-            queue.append(v)
+          needAdd = True
+       if needAdd and v not in queue:
+         queue.append(v)
 
   if not cost[end]:
     return -1

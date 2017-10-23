@@ -14,10 +14,11 @@ def findCost(start, end, graph, cost):
       w = n['w']
       if v == current:
         continue
-      newCosts = set([w | i for i in cost[current]])
-      if not newCosts.issubset(cost[v]):
-        cost[v] = cost[v].union(newCosts)
-        queue.append(v)
+      for c in cost[current]:
+        if c | w not in cost[v]:
+          cost[v].add(c | w)
+          if v not in queue:
+            queue.append(v)
 
   if not cost[end]:
     return -1

@@ -32,12 +32,12 @@ if __name__ == "__main__":
     n, m = [int(n), int(m)]
     g = {}
     for v in range(1, n + 1):
-      g[v] = []
+      g[v] = set([])
     for a1 in range(m):
       u, v = input().strip().split(' ')
       u, v = [int(u), int(v)]
-      g[u].append(v)
-      g[v].append(u)
+      g[u].add(v)
+      g[v].add(u)
     s = int(input().strip())
     result = bfs(s, g)
     del result[s]

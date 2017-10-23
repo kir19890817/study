@@ -3,24 +3,23 @@
 import sys
 from collections import deque
 
-def findCost(start, end, graph):
+def findCost(start, end, graph, cost):
   queue = deque([start])
   checked = set([])
-  cost = {}
-  for i in graph:
-    cost[i] = set([])
-  cost[start].add(0)
     
   while queue:
     current = queue.popleft()
-    checked.add(current)
+
     for n in graph[current]:
       v = n['v']
       w = n['w']
       if v not in checked:
         queue.append(v)
-        for i in cost[current]:
+        for i in cost[current].copy():
           cost[v].add(w | i)
+    checked.add(current)
+  if not cost[end]:
+    return -1
   return min(cost[end])
   
 if __name__ == '__main__':
@@ -36,4 +35,8 @@ if __name__ == '__main__':
     graph[v2].append({'v': v1, 'w': w})
   line = input().split()
   start, end = [int(i) for i in line]
-  print(findCost(start, end, graph))
+  cost = {}
+  for i in graph:
+    cost[i] = set([])
+  cost[start].add(0)
+  print(findCost(start, end, graph, cost))

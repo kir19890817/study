@@ -2,7 +2,7 @@
 
 from collections import Counter
 
-def collectMoney(graph, counter):
+def collectForConnected(graph, counter):
   for v in graph:
     adjanced = graph[v]['adjanced']
     disconnected = []
@@ -21,17 +21,7 @@ def collectMoney(graph, counter):
       mask = d | 1 << v
       counter[mask] = counter[d] + cost
 
-if __name__ == '__main__':
-  nHouses, nRoads = [int(x) for x in input().split()]
-  graph = {}
-  money = [int(x) for x in input().split()]
-  for i in range(1, nHouses + 1):
-    graph[i] = {'c': money[i - 1], 'adjanced': 0}
-  for i in range(nRoads):
-    a, b = [int(x) for x in input().split()]
-    graph[a]['adjanced'] |= 1 << b;
-    graph[b]['adjanced'] |= 1 << a;
-  counter = Counter()
+def collectForDisconnected(graph):
   result0 = 0
   disconnected = []
   disconnectedNulls = 0
@@ -42,13 +32,25 @@ if __name__ == '__main__':
       disconnected.append(v)
   for v in disconnected:
     del graph[v]
+  return result0, 2**disconnectedNulls
+
+if __name__ == '__main__':
+  nHouses, nRoads = [int(x) for x in input().split()]
+  graph = {}
+  money = [int(x) for x in input().split()]
+  for i in range(1, nHouses + 1):
+    graph[i] = {'c': money[i - 1], 'adjanced': 0}
+  for i in range(nRoads):
+    a, b = [int(x) for x in input().split()]
+    graph[a]['adjanced'] |= 1 << b;
+    graph[b]['adjanced'] |= 1 << a;
+  result0, ways0 = collectForDisconnected(graph)
   if not graph:
-    print(result0, 2**disconnectedNulls)
+    print(result0, ways0)
   else:
-    collectMoney(graph, counter)
+    counter = Counter()
+    collectForConnected(graph, counter)
     values = list(counter.values())
     result = max(values)
-    ways = values.count(result)
-    if result == 0:
-      ways += 1
-    print(result + result0, ways*2**disconnectedNulls)
+    ways = values.count(result) + (result == 0)
+    print(result + result0, ways0*ways)

@@ -42,12 +42,13 @@ if __name__ == '__main__':
       disconnected.append(v)
   for v in disconnected:
     del graph[v]
-  collectMoney(graph, counter)
-  if counter:
+  if not graph:
+    print(result0, 2**disconnectedNulls)
+  else:
+    collectMoney(graph, counter)
     values = list(counter.values())
     result = max(values)
     ways = values.count(result)
-  else:
-    result = 0
-    ways = 1
-  print(result + result0, ways*2**disconnectedNulls)
+    if result == 0:
+      ways += 1
+    print(result + result0, ways*2**disconnectedNulls)

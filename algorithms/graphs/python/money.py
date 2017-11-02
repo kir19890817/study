@@ -14,16 +14,13 @@ def collectMoney(graph, counter):
       else:
         connected.append(path)
     cost = graph[v]['c']
-    if not connected:
-      counter[1 << v] = cost
+    counter[1 << v] = cost
     for c in connected:
       mask = 1 << v | c & ~adjanced
-      if not mask in counter:
-        counter[mask] = counter[c & ~adjanced] + cost
+      counter[mask] = counter[c & ~adjanced] + cost
     for d in disconnected:
       mask = d | 1 << v
-      if not mask in counter:
-        counter[mask] = counter[d] + cost
+      counter[mask] = counter[d] + cost
 
 if __name__ == '__main__':
   nHouses, nRoads = [int(x) for x in input().split()]
@@ -36,7 +33,18 @@ if __name__ == '__main__':
     graph[a]['adjanced'] |= 1 << b;
     graph[b]['adjanced'] |= 1 << a;
   counter = Counter()
+  result0 = 0
+  disconnected = []
+  disconnectedNulls = 0
+  for v in graph:
+    if not graph[v]['adjanced']:
+      result0 += graph[v]['c']
+      disconnectedNulls += graph[v]['c'] == 0
+      disconnected.append(v)
+  for v in disconnected:
+    del graph[v]
   collectMoney(graph, counter)
   values = list(counter.values())
   result = max(values)
-  print(result, values.count(result))
+  ways = values.count(result)
+  print(result + result0, ways*2**disconnectedNulls)

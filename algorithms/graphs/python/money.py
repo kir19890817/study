@@ -3,7 +3,6 @@
 from collections import Counter
 
 def collectMoney(graph, counter):
-  result = 0
   for v in graph:
     adjanced = graph[v]['adjanced']
     disconnected = []
@@ -44,7 +43,11 @@ if __name__ == '__main__':
   for v in disconnected:
     del graph[v]
   collectMoney(graph, counter)
-  values = list(counter.values())
-  result = max(values)
-  ways = values.count(result)
+  if counter:
+    values = list(counter.values())
+    result = max(values)
+    ways = values.count(result)
+  else:
+    result = 0
+    ways = 1
   print(result + result0, ways*2**disconnectedNulls)

@@ -2,7 +2,8 @@
 
 from collections import Counter
 
-def collectForConnected(graph, counter):
+def collectForConnected(graph):
+  counter = Counter()
   for v in graph:
     adjanced = graph[v]['adjanced']
     disconnected = []
@@ -20,6 +21,10 @@ def collectForConnected(graph, counter):
     for d in disconnected:
       mask = d | 1 << v
       counter[mask] = counter[d] + cost
+  values = list(counter.values())
+  result = max(values)
+  ways = values.count(result) + (result == 0)
+  return result, ways
 
 def collectForDisconnected(graph):
   result0 = 0
@@ -48,9 +53,5 @@ if __name__ == '__main__':
   if not graph:
     print(result0, ways0)
   else:
-    counter = Counter()
-    collectForConnected(graph, counter)
-    values = list(counter.values())
-    result = max(values)
-    ways = values.count(result) + (result == 0)
+    result, ways = collectForConnected(graph)
     print(result + result0, ways0*ways)
